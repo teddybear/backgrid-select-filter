@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Backgrid Select Filter</title>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		
+		<script src="3rd/jquery.min.js" type="text/javascript"></script>
+		<script src="3rd/bootstrap.min.js" type="text/javascript"></script>
+		<link href="3rd/bootstrap.min.css" rel="stylesheet" type="text/css" charset="utf-8">
+		
+		<script src="3rd/underscore.js" type="text/javascript"></script>
+		<script src="3rd/backbone.js" type="text/javascript"></script>
+		<script src="3rd/backbone-pageable.js" type="text/javascript"></script>
+		<script src="3rd/backgrid.js" type="text/javascript"></script>
+		<script src="3rd/backgrid-paginator.js" type="text/javascript"></script>
+		<link href="3rd/backgrid-paginator.min.css" rel="stylesheet" type="text/css" charset="utf-8">
+		
+		<script src="backgrid-select-filter.js" type="text/javascript"></script>
+		<script src="territories.js" type="text/javascript"></script>
+		<script src="example.js" type="text/javascript"></script>
+	</head>
+	<body>
+		<header class="navbar">
+			<div class="container">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="#">Backgrid Select Filter</a>
+				</div>
+			</div>
+		</header>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					This Backgrid extension allows you to filter using a SELECT. Works on <a href="https://github.com/wyuenho/backbone-pageable/">Backbone.PageableCollection</a>.
+				</div>
+			</div>
+			<br/>
+			<div class="row">
+				<div class="col-md-12">
+					<label>Filter:</label>
+					<select id="filter"></select>
+				</div>
+			</div>
+			<div class="row">
+				<div id="result" class="col-md-12">
+				</div>
+			</div>
+		</div>
+		<footer>
+			<div class="container">
+				<p class="pull-left">&copy; 2014 <a href="http://www.amilia.com/en">Amilia Inc.</a> Authored by Martin Drapeau.</p>
+				<p class="pull-right"><a href="https://github.com/AmiliaApp/backgrid-select-filter">Fork on Github</a></p>
+			</div>
+		</footer>
+	</body>
+</html>
