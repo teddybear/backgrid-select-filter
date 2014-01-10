@@ -2,26 +2,26 @@
 // Converted using: http://www.csvjson.com/csv2json/483795358a4b65b0d1b1d462a52e30ff
 
 var _continents = [{
-	label: "North America",
-	value: "NA"
+  label: "North America",
+  value: "NA"
 }, {
-	label: "South America",
-	value: "SA"
+  label: "South America",
+  value: "SA"
 }, {
-	label: "Europe",
-	value: "EU"
+  label: "Europe",
+  value: "EU"
 }, {
-	label: "Africa",
-	value: "AF"
+  label: "Africa",
+  value: "AF"
 }, {
-	label: "Oceania",
-	value: "OC"
+  label: "Oceania",
+  value: "OC"
 }, {
-	label: "Antartica",
-	value: "AN"
+  label: "Antartica",
+  value: "AN"
 }, {
-	label: "Asia",
-	value: "AS"
+  label: "Asia",
+  value: "AS"
 }];
 
 var _territories = [
