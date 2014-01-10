@@ -3,8 +3,8 @@
 	http://github.com/amiliaapp/backgrid-select-filter
 
 	Copyright (c) 2014 Amilia Inc.
-	Authored by Martin Drapeau
-	Licensed under the MIT @license.
+	Written by Martin Drapeau
+	Licensed under the MIT @license
  */
 (function(){
 	var SelectFilter = Backgrid.Extension.SelectFilter = Backbone.View.extend({
