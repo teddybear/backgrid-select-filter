@@ -1,4 +1,5 @@
 // Source: https://gist.github.com/kamermans/1441495
+// Converted using: http://www.csvjson.com/csv2json/483795358a4b65b0d1b1d462a52e30ff
 
 var _continents = [{
 	label: "North America",

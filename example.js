@@ -1,52 +1,30 @@
 $(document).ready(function() {
 
 	// Collection
-	var Territory = Backbone.Model.extend({});
 	var Territories = Backbone.PageableCollection.extend({
-	  model: Territory,
-	  state: {
-		pageSize: 15
-	  },
-	  mode: "client"
+		state: {pageSize: 15},
+		mode: "client"
 	});
 	var territories = new Territories(_territories);
 
 	// Grid
-	var columns = [{
-		name: "id",
-		label: "ID",
-		editable: false,
-		cell: Backgrid.IntegerCell.extend({
-		orderSeparator: ''
-		})
-	}, {
-		name: "name",
-		label: "Name",
-		cell: "string"
-	}, {
-		name: "code",
-		label: "Code",
-		cell: "string"
-	}, {
-		name: "continent",
-		label: "Continent",
-		cell: "string"
-	}];
-	var grid = new Backgrid.Grid({
+	var columns = [{name: "id", label: "ID", cell: "integer"},
+			{name: "name", label: "Name", cell: "string"},
+			{name: "code", label: "Code", cell: "string"},
+			{name: "continent", label: "Continent", cell: "string"}],
+		grid = new Backgrid.Grid({
 			columns: columns,
-			collection: territories
+			collection: territories,
+			className: "backgrid table"
 		}),
 		$grid = grid.render().$el;
-
 	$("#result").append($grid);
-	
-	// Initialize the paginator
+
+	// Paginator
 	var paginator = new Backgrid.Extension.Paginator({
-			collection: territories,
-			className: "backgrid-paginator pagination"
+			collection: territories
 		}),
 		$paginator = paginator.render().$el;
-
 	$("#result").append($paginator);
 
 	// Select filter
@@ -56,7 +34,6 @@ $(document).ready(function() {
 			selectOptions: _.union([{label: "All", value: null}], _continents)
 		}),
 		$filter = filter.render().$el;
-
 	$("#filter").replaceWith($filter);
 	
 });
