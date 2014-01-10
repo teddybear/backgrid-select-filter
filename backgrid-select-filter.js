@@ -2,6 +2,11 @@
   Backgrid select-filter extension
   http://github.com/amiliaapp/backgrid-select-filter
 
+  Creates a SELECT element to filter your Backgrid.
+  
+  Greatly inspired from backgrid-filter: https://github.com/wyuenho/backgrid-filter.
+  However with no external dependencies.
+
   Copyright (c) 2014 Amilia Inc.
   Written by Martin Drapeau
   Licensed under the MIT @license
