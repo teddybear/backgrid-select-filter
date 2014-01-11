@@ -11,7 +11,7 @@ $(document).ready(function() {
   var columns = [{name: "id", label: "ID", cell: "integer"},
       {name: "name", label: "Name", cell: "string"},
       {name: "code", label: "Code", cell: "string"},
-      {name: "continent", label: "Continent", cell: "string"}],
+      {name: "continent_code", label: "Continent", cell: "string"}],
     grid = new Backgrid.Grid({
       columns: columns,
       collection: territories,
@@ -30,8 +30,9 @@ $(document).ready(function() {
   // Select filter
   var filter = new Backgrid.Extension.SelectFilter({
       collection: territories,
-      field: "continent",
-      selectOptions: _.union([{label: "All", value: null}], _continents)
+      field: "continent_code",
+      selectOptions: _.union([{label: "All", value: null}],
+		_.map(_continents, function(o) {return {label: o.name, value: o.code};}))
     }),
     $filter = filter.render().$el;
   $("#filter").replaceWith($filter);
