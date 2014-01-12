@@ -1,5 +1,5 @@
 // Source: https://gist.github.com/kamermans/1441495
-// Conversion from MySQL to JSON: http://www.csvjson.com/mysql2json/c323bd12e3e5fd84a5fd02f6bfa64ac0
+// Conversion from MySQL to JSON: http://www.csvjson.com/sql2json/c323bd12e3e5fd84a5fd02f6bfa64ac0
 
 var _continents = [
   {
