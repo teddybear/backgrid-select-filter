@@ -29,6 +29,7 @@ $(document).ready(function() {
 
   // Select filter
   var filter = new Backgrid.Extension.SelectFilter({
+      className: "backgrid-filter form-control",
       collection: territories,
       field: "continent_code",
       selectOptions: _.union([{label: "All", value: null}],
