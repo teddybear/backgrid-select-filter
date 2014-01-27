@@ -2,11 +2,6 @@
   Backgrid select-filter extension
   http://github.com/amiliaapp/backgrid-select-filter
 
-  Creates a SELECT element to filter your Backgrid.
-  
-  Greatly inspired from backgrid-filter: https://github.com/wyuenho/backgrid-filter.
-  However with no external dependencies.
-
   Copyright (c) 2014 Amilia Inc.
   Written by Martin Drapeau
   Licensed under the MIT @license
@@ -23,15 +18,24 @@
     events: {
       "change": "onChange"
     },
+    defaults: {
+      selectOptions: undefined,
+      field: undefined,
+      clearValue: null,
+      initialValue: undefined,
+      makeMatcher: function(value) {
+        return function(model) {
+          return model.get(this.field) == value;
+        };
+      }
+    },
     initialize: function(options) {
       SelectFilter.__super__.initialize.apply(this, arguments);
 
-      if (!options.selectOptions || !_.isArray(options.selectOptions)) throw "Invalid or missing selectOptions.";
-      if (!options.field || !options.field.length) throw "Invalid or missing field.";
-      this.selectOptions = options.selectOptions;
-      this.field = options.field;
-      this.clearValue = options.clearValue !== undefined ? options.clearValue : null;
-      this.initialValue = options.initialValue !== undefined ? options.initialValue : this.clearValue;
+      _.defaults(this, options || {}, this.defaults);
+      if (_.isEmpty(this.selectOptions) || !_.isArray(this.selectOptions)) throw "Invalid or missing selectOptions.";
+      if (_.isEmpty(this.field) || !this.field.length) throw "Invalid or missing field.";
+      if (this.initialValue === undefined) this.initialValue = this.clearValue;
 
       var collection = this.collection = this.collection.fullCollection || this.collection;
       var shadowCollection = this.shadowCollection = collection.clone();
@@ -66,9 +70,7 @@
       var col = this.collection,
         field = this.field,
         value = this.currentValue(),
-        matcher = function(model) {
-          return model.get(field) == value;
-        };
+        matcher = _.bind(this.makeMatcher(value), this);
 
       if (col.pageableCollection)
         col.pageableCollection.getFirstPage({silent: true});

@@ -48,6 +48,14 @@
 						<li><strong>selectOptions:</strong> An array of option objects to create OPTIONs in the SELECT. Each option object must contain <em>value</em> and <em>label</em>.</li>
 						<li><strong>clearValue:</strong> Optional. Value to clear the filter. Defaults to <code>null</code>.</li>
 						<li><strong>initialValue:</strong> Optional. Value first selected. Defaults to <strong>clearValue</strong>.</li>
+						<li>
+							<strong>makeMatcher:</strong> Optional.
+							Function which returns a function used in Backbone.Model.filter().
+							Takes as argument the <code>value</code> set in the selected OPTIONS element.
+							Defaults to a function which does an <code>==</code> comparison.
+							Overwrite this to provider your own matching function.
+							The matching function you return will be passed the <code>model</code> as argument, and <code>this</code> will be set to the SelectFilter instance.
+						</li>
 					</ul>
 				</div>
 			</div>
@@ -64,7 +72,7 @@
 					<select id="filter"></select>
 				</div>
 				<div class="col-md-6">
-				<h4>Code</h4>
+					<h4>Code</h4>
 <pre>
 // Collection
 var Territories = Backbone.PageableCollection.extend({
@@ -101,6 +109,50 @@ var filter = new Backgrid.Extension.SelectFilter({
   }),
   $filter = filter.render().$el;
 $("#filter").replaceWith($filter);
+</pre>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<h3>Custom Matcher</h3>
+					<p>
+						For more complex filtering, where your SELECT values describe a custom filter to apply, you can override the <code>makeMatcher</code> function.
+						For example, say you want a filter with Americas, Europe, Asia, and Others.
+					</p>
+				</div>
+			</div>
+			<div class="row">
+				<div id="result-2" class="col-md-6">
+					<label>Filter by Continent:</label>
+					<select id="filter-2"></select>
+				</div>
+				<div class="col-md-6">
+				<h4>Code</h4>
+<pre>
+// Select filter
+var filter2 = new Backgrid.Extension.SelectFilter({
+    collection: territories,
+    field: "continent",
+    selectOptions: [{
+	  label: "All", value: null
+	}, {
+	  label: "Americas", value: ["NA", "SA"]
+	}, {
+	  label: "Europe", value: ["EU"]
+	}, {
+	  label: "Asia", value: ["AS"]
+	}, {
+	  label: "Other", value: ["AF", "OC", "AN"]
+	}],
+	makeMatcher: function(value) {
+	  return function(model) {
+	    return _.indexOf(this.selectOptions[value],
+		  model.get(this.field)) >= 0;
+	  }
+	}
+  }),
+  $filter2 = filter2.render().$el;
+$("#filter-2").replaceWith($filter2);
 </pre>
 				</div>
 			</div>
