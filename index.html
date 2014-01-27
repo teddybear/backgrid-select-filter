@@ -68,8 +68,10 @@
 			<br/>
 			<div class="row">
 				<div id="result" class="col-md-6">
-					<label>Filter by Continent:</label>
-					<select id="filter"></select>
+					<div class="form-group form-inline">
+						<label>Filter by Continent:</label>
+						<select id="filter" class="form-control"></select>
+					</div>
 				</div>
 				<div class="col-md-6">
 					<h4>Code</h4>
@@ -85,7 +87,7 @@ var territories = new Territories(_territories);
 var columns = [{name: "id", label: "ID", cell: "integer"},
     {name: "name", label: "Name", cell: "string"},
     {name: "code", label: "Code", cell: "string"},
-    {name: "continent", label: "Continent", cell: "string"}],
+    {name: "continent_code", label: "Continent", cell: "string"}],
   grid = new Backgrid.Grid({
     columns: columns,
     collection: territories,
@@ -103,9 +105,11 @@ $("#result").append($paginator);
 
 // Select filter
 var filter = new Backgrid.Extension.SelectFilter({
+    className: "backgrid-filter form-control",
     collection: territories,
-    field: "continent",
-    selectOptions: _.union([{label: "All", value: null}], _continents)
+    field: "continent_code",
+    selectOptions: _.union([{label: "All", value: null}],
+	  _.map(_continents, function(o) {return {label: o.name, value: o.code};}))
   }),
   $filter = filter.render().$el;
 $("#filter").replaceWith($filter);
@@ -123,8 +127,10 @@ $("#filter").replaceWith($filter);
 			</div>
 			<div class="row">
 				<div id="result-2" class="col-md-6">
-					<label>Filter by Continent:</label>
-					<select id="filter-2"></select>
+					<div class="form-group form-inline">
+						<label>Filter:</label>
+						<select id="filter-2" class="form-control"></select>
+					</div>
 				</div>
 				<div class="col-md-6">
 				<h4>Code</h4>
@@ -132,7 +138,7 @@ $("#filter").replaceWith($filter);
 // Select filter
 var filter2 = new Backgrid.Extension.SelectFilter({
     collection: territories,
-    field: "continent",
+    field: "continent_code",
     selectOptions: [{
 	  label: "All", value: null
 	}, {
