@@ -61,6 +61,7 @@
         options: this.selectOptions,
         initialValue: this.initialValue
       }));
+			this.onChange();
       return this;
     },
     currentValue: function() {
