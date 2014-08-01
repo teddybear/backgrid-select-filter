@@ -82,9 +82,8 @@ $(document).ready(function() {
                 label: "Asia", value: ["AS"]
               }, {
                 label: "Other", value: ["AF", "OC", "AN"]
-              }],
-      }]
-      
+              }]
+      }],
       makeMatcher: function(value) {
         return function(model) {
         return _.indexOf(value, model.get(this.field)) >= 0;
