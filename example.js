@@ -36,9 +36,11 @@ $(document).ready(function() {
     var filter = new Backgrid.Extension.SelectFilter({
       className: "backgrid-filter form-control",
       collection: territories,
-      field: "continent_code",
-      selectOptions: _.union([{label: "All", value: null}],
-      _.map(_continents, function(o) {return {label: o.name, value: o.code};}))
+      fields: [{ 
+                name:"continent_code",
+                selectOptions: _.union([{label: "All", value: null}],
+                              _.map(_continents, function(o) {return {label: o.name, value: o.code};}))          
+              }],
     }),
     $filter = filter.render().$el;
     $("#filter").replaceWith($filter);
@@ -68,18 +70,21 @@ $(document).ready(function() {
     var filter = new Backgrid.Extension.SelectFilter({
         className: "backgrid-filter form-control",
       collection: territories,
-      field: "continent_code",
-      selectOptions: [{
-        label: "All", value: null
-      }, {
-        label: "Americas", value: ["NA", "SA"]
-      }, {
-        label: "Europe", value: ["EU"]
-      }, {
-        label: "Asia", value: ["AS"]
-      }, {
-        label: "Other", value: ["AF", "OC", "AN"]
-      }],
+      fields:[{
+              name: "continent_code"
+              selectOptions: [{
+                label: "All", value: null
+              }, {
+                label: "Americas", value: ["NA", "SA"]
+              }, {
+                label: "Europe", value: ["EU"]
+              }, {
+                label: "Asia", value: ["AS"]
+              }, {
+                label: "Other", value: ["AF", "OC", "AN"]
+              }],
+      }]
+      
       makeMatcher: function(value) {
         return function(model) {
         return _.indexOf(value, model.get(this.field)) >= 0;
