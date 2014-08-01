@@ -14,8 +14,8 @@
     template: _.template([
       "<% for (var i=0; i < options.length; i++) { %>",
       " <select multiple='multiple'>",
-      "   <% for (var j=0; j < options[i].length; j++) { %>",
-      "     <option value='<%=JSON.stringify(options[i][j].value)%>' <%=options[i][j].value === clearValue ? 'selected=\"selected\"' : ''%>><%=options[i][j].label%></option>",
+      "   <% for (var j=0; j < options[i].selectOptions.length; j++) { %>",
+      "     <option value='<%=JSON.stringify(options[i].selectOptions[j].value)%>' <%=options[i].selectOptions[j].value === clearValue ? 'selected=\"selected\"' : ''%>><%=options[i].selectOptions[j].label%></option>",
       "   <% } %>",
       " </select>",
       " <% } %>"
@@ -24,34 +24,35 @@
       "change": "onChange"
     },
     defaults: {
-      selectOptions: undefined,
-      fields: undefined,
+      fields:[
+        {
+          name:null,
+          selectOptions:undefined
+        }
+      ],
       clearValue: null,
       initialValue: undefined,
       makeMatcher: function(values) {
-        var c = [];
+        var matcherValues = [];
         _.each(this.fields, function(field, idx){
           if(values[idx] !== this.clearValue)
-            c.push({field:field, value:values[idx]});
+            matcherValues.push({field:field.name, value:values[idx]});
         }, this);
-        if(!(_.isEmpty(c))){
-          
+        if(!(_.isEmpty(matcherValues))){
           return function(model){
-            var en = _.filter(c, function(q){
-                        
-                        if(_.isArray(q.value)){
-                          return _.find(q.value, function(m){
-                            return model.get(q.field) === m;
-                          });  
-                        } 
-                          else if(model.get(q.field) === q.value){
-                            return true;
-                        } else {
-                           return false;
-                        }
-                    });
-            console.log(en);
-            return !_.isEmpty(en) && en.length === c.length;
+            var matches = _.filter(matcherValues, function(match){
+                              if(_.isArray(match.value)){
+                                return _.find(match.value, function(m){
+                                  return model.get(match.field) === m;
+                                });  
+                              } 
+                                else if(model.get(match.field) === match.value){
+                                  return true;
+                              } else {
+                                 return false;
+                              }
+                          });
+            return !_.isEmpty(matches) && matches.length === matcherValues.length;
           }
         } else {
           return function(model){
@@ -64,8 +65,11 @@
       SelectFilter.__super__.initialize.apply(this, arguments);
 
       _.defaults(this, options || {}, this.defaults);
-      if (_.isEmpty(this.selectOptions) || !_.isArray(this.selectOptions)) throw "Invalid or missing selectOptions.";
       if (_.isEmpty(this.fields) || !this.fields.length) throw "Invalid or missing field.";
+      _.each(this.fields, function(f){
+          if (_.isEmpty(f.selectOptions) || !_.isArray(f.selectOptions)) throw "Invalid or missing selectOptions.";  
+      });
+      
       if (this.initialValue === undefined) this.initialValue = this.clearValue;
 
       var collection = this.collection = this.collection.fullCollection || this.collection;
@@ -89,7 +93,7 @@
     },
     render: function() {
       this.$el.empty().append(this.template({
-        options: this.selectOptions,
+        options: this.fields,
         initialValue: this.initialValue,
         clearValue: this.clearValue
       }));
@@ -123,12 +127,11 @@
       if (col.pageableCollection)
         col.pageableCollection.getFirstPage({silent: true});
 
-      var nonclear = _.filter(values, function(v){
+      var buffer = _.filter(values, function(v){
           if(v !== this.clearValue)
             return v;
       });
-      // console.log(nonclear);
-      if (!_.isEmpty(nonclear))
+      if (!_.isEmpty(buffer))
         col.reset(this.shadowCollection.filter(matcher), {reindex: false});
       else
         col.reset(this.shadowCollection.models, {reindex: false});
