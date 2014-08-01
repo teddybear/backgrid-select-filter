@@ -1,4 +1,5 @@
-This fork is a hardcoded hack for many selects with multiple input.
+This fork is a hardcoded hack for many selects with multiple input, quick and dirty =)
+Maybe, will work on it later...
 
 From author:
 Backgrid Select Filter
