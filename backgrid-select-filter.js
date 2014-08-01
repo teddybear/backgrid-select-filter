@@ -13,7 +13,7 @@
     className: "backgrid-filter",
     template: _.template([
       "<% for (var i=0; i < options.length; i++) { %>",
-      " <select multiple='multiple'>",
+      " <select <%=options[i].multiple === true ? multiple='multiple' : ''%>>",
       "   <% for (var j=0; j < options[i].selectOptions.length; j++) { %>",
       "     <option value='<%=JSON.stringify(options[i].selectOptions[j].value)%>' <%=options[i].selectOptions[j].value === clearValue ? 'selected=\"selected\"' : ''%>><%=options[i].selectOptions[j].label%></option>",
       "   <% } %>",
@@ -27,7 +27,8 @@
       fields:[
         {
           name:null,
-          selectOptions:undefined
+          selectOptions:undefined,
+          multiple: false
         }
       ],
       clearValue: null,
@@ -103,7 +104,7 @@
     currentValue: function() {
       return _.map(this.$el.children(), function(sel){
           var v = $(sel).val();
-          if(v.length === 1){
+          if(!_.isArray(v) || _.isArray(v) && v.length === 1){
             return JSON.parse(v);
           }
           else {
