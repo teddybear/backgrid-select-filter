@@ -1,3 +1,6 @@
+This fork is a hardcoded hack for many selects with multiple input.
+
+From author:
 Backgrid Select Filter
 ======================
 Client side drop-down filter for Backgrid. Inspired from [backgrid-filter](https://github.com/wyuenho/backgrid-filter]). To be used with [Backgrid](https://github.com/wyuenho/backgrid) and [Backbone](http://github.com/jashkenas/backbone/) of course.<br/>
