@@ -13,7 +13,7 @@
     className: "backgrid-filter",
     template: _.template([
       "<% for (var i=0; i < options.length; i++) { %>",
-      " <select <%=options[i].multiple === true ? multiple='multiple' : ''%>>",
+      " <select <%=options[i].multiple === true ? multiple='multiple' : ''%> class='form-control'>",
       "   <% for (var j=0; j < options[i].selectOptions.length; j++) { %>",
       "     <option value='<%=JSON.stringify(options[i].selectOptions[j].value)%>' <%=options[i].selectOptions[j].value === clearValue ? 'selected=\"selected\"' : ''%>><%=options[i].selectOptions[j].label%></option>",
       "   <% } %>",
@@ -102,7 +102,12 @@
       return this;
     },
     currentValue: function() {
-      return _.map(this.$el.children(), function(sel){
+      r = this;
+      selects = _.filter(this.$el.children(), function(child){
+          return $(child).is('select');
+      });
+      // return _.map(this.$el.children(), function(sel){
+      return _.map(selects, function(sel){
           var v = $(sel).val();
           if(!_.isArray(v) || _.isArray(v) && v.length === 1){
             return JSON.parse(v);
