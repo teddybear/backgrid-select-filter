@@ -71,7 +71,7 @@ $(document).ready(function() {
         className: "backgrid-filter form-control",
       collection: territories,
       fields:[{
-              name: "continent_code"
+              name: "continent_code",
               selectOptions: [{
                 label: "All", value: null
               }, {
