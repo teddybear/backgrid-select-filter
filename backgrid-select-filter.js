@@ -7,7 +7,29 @@
   Updgraded by Alexey Ismailov aka teddybear
   Licensed under the MIT @license
  */
-(function(){
+(function (root, factory) {
+
+  // CommonJS
+  if (typeof exports == "object") {
+    module.exports = factory(require("underscore"),
+        require("backbone"),
+        require("backgrid"),
+        require("backbone.paginator"));
+  }
+  // AMD. Register as an anonymous module.
+  else if (typeof define === 'function' && define.amd) {
+    define(['underscore', 'backbone', 'backgrid', 'backbone.paginator'], factory);
+  }
+  // Browser
+  else {
+    factory(root._, root.Backbone, root.Backgrid);
+  }
+
+}(this, function (_, Backbone, Backgrid) {
+
+  "use strict";
+
+
   var SelectFilter = Backgrid.Extension.SelectFilter = Backbone.View.extend({
     tagName: "div",
     className: "backgrid-filter",
@@ -137,10 +159,18 @@
           if(v !== this.clearValue)
             return v;
       });
-      if (!_.isEmpty(buffer))
+      if (!_.isEmpty(buffer)) {
+
         col.reset(this.shadowCollection.filter(matcher), {reindex: false});
-      else
+        this.trigger('cs-filter', this.collection);
+      }
+      else{
+
         col.reset(this.shadowCollection.models, {reindex: false});
+        this.trigger('cs-filter', this.collection);
+      }
+
     }
   });
-}).call(this);
+
+}));
